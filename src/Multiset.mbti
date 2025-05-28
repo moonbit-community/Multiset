@@ -1,0 +1,105 @@
+
+// Values
+fn[E : Hash + Eq] add[E](T[E], E) -> Unit
+
+fn[E : Hash + Eq] add_all[E](T[E], T[E]) -> Unit
+
+fn[E : Hash + Eq] add_n[E](T[E], E, Int) -> Unit
+
+fn[E : Hash + Eq] apply_operation[E](T[E], T[E], SetOperation) -> T[E]
+
+fn[E] clear[E](T[E]) -> Unit
+
+fn[E : Hash + Eq] contains[E](T[E], E) -> Bool
+
+fn[E : Hash + Eq] count[E](T[E], E) -> Int
+
+fn[E] counts[E](T[E]) -> Array[Int]
+
+fn[E : Hash + Eq] difference[E](T[E], T[E]) -> T[E]
+
+fn[E] distinct_size[E](T[E]) -> Int
+
+fn[E] each[E](T[E], (E, Int) -> Unit) -> Unit
+
+fn[E] elements[E](T[E]) -> Array[E]
+
+fn[E : Hash + Eq] from_array[E](Array[E]) -> T[E]
+
+fn[E : Hash + Eq] from_iter[E](Iter[E]) -> T[E]
+
+fn[E : Hash + Eq] intersection[E](T[E], T[E]) -> T[E]
+
+fn[E] is_empty[E](T[E]) -> Bool
+
+fn[E : Hash + Eq] is_subset[E](T[E], T[E]) -> Bool
+
+fn[E : Hash + Eq] is_superset[E](T[E], T[E]) -> Bool
+
+fn[E] iter[E](T[E]) -> Iter2[E, Int]
+
+fn[E] most_common[E](T[E]) -> Entry[E]?
+
+fn[E] most_common_n[E](T[E], Int) -> Array[Entry[E]]
+
+fn[E : Hash + Eq] new[E](capacity~ : Int = ..) -> T[E]
+
+fn[E : Hash + Eq] of[E](FixedArray[E]) -> T[E]
+
+fn[E : Hash + Eq] remove[E](T[E], E) -> Unit
+
+fn[E : Hash + Eq] remove_all[E](T[E], E) -> Unit
+
+fn[E : Hash + Eq] remove_n[E](T[E], E, Int) -> Unit
+
+fn[E : Hash + Eq] retain[E](T[E], T[E]) -> Unit
+
+fn[E : Hash + Eq] set_count[E](T[E], E, Int) -> Unit
+
+fn[E] size[E](T[E]) -> Int
+
+fn[E : Hash + Eq] subtract[E](T[E], T[E]) -> Unit
+
+fn[E : Hash + Eq] symmetric_difference[E](T[E], T[E]) -> T[E]
+
+fn[E] to_array[E](T[E]) -> Array[Entry[E]]
+
+fn[E : Hash + Eq] union[E](T[E], T[E]) -> T[E]
+
+// Types and methods
+impl T {
+  add[E : Hash + Eq](Self[E], E) -> Unit
+  add_all[E : Hash + Eq](Self[E], Self[E]) -> Unit
+  add_n[E : Hash + Eq](Self[E], E, Int) -> Unit
+  apply_operation[E : Hash + Eq](Self[E], Self[E], SetOperation) -> Self[E]
+  clear[E](Self[E]) -> Unit
+  contains[E : Hash + Eq](Self[E], E) -> Bool
+  count[E : Hash + Eq](Self[E], E) -> Int
+  counts[E](Self[E]) -> Array[Int]
+  difference[E : Hash + Eq](Self[E], Self[E]) -> Self[E]
+  distinct_size[E](Self[E]) -> Int
+  each[E](Self[E], (E, Int) -> Unit) -> Unit
+  elements[E](Self[E]) -> Array[E]
+  intersection[E : Hash + Eq](Self[E], Self[E]) -> Self[E]
+  is_empty[E](Self[E]) -> Bool
+  is_subset[E : Hash + Eq](Self[E], Self[E]) -> Bool
+  is_superset[E : Hash + Eq](Self[E], Self[E]) -> Bool
+  iter[E](Self[E]) -> Iter2[E, Int]
+  most_common[E](Self[E]) -> Entry[E]?
+  most_common_n[E](Self[E], Int) -> Array[Entry[E]]
+  remove[E : Hash + Eq](Self[E], E) -> Unit
+  remove_all[E : Hash + Eq](Self[E], E) -> Unit
+  remove_n[E : Hash + Eq](Self[E], E, Int) -> Unit
+  retain[E : Hash + Eq](Self[E], Self[E]) -> Unit
+  set_count[E : Hash + Eq](Self[E], E, Int) -> Unit
+  size[E](Self[E]) -> Int
+  subtract[E : Hash + Eq](Self[E], Self[E]) -> Unit
+  symmetric_difference[E : Hash + Eq](Self[E], Self[E]) -> Self[E]
+  to_array[E](Self[E]) -> Array[Entry[E]]
+  union[E : Hash + Eq](Self[E], Self[E]) -> Self[E]
+}
+impl[E : Eq + Hash] Eq for T[E]
+
+// Type aliases
+
+// Traits
