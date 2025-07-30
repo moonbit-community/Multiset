@@ -1,4 +1,3 @@
-
 ///|
 /// 创建一个新的空多重集合
 ///
@@ -6,7 +5,7 @@
 /// * `capacity` : 初始容量，默认为8
 ///
 /// 返回一个新的空多重集合
-pub fn new[E : Hash + Eq](capacity~ : Int = 8) -> T[E] {
+pub fn[E] new(capacity~ : Int = 8) -> T[E] {
   { counts: @hashmap.new(capacity~), total_count: 0 }
 }
 
@@ -17,7 +16,7 @@ pub fn new[E : Hash + Eq](capacity~ : Int = 8) -> T[E] {
 /// * `arr` : 包含元素的数组
 ///
 /// 返回一个包含数组中所有元素的多重集合
-pub fn from_array[E : Hash + Eq](arr : Array[E]) -> T[E] {
+pub fn[E : Hash + Eq] from_array(arr : Array[E]) -> T[E] {
   let ms = new()
   arr.each(fn(e) { ms.add(e) })
   ms
@@ -25,7 +24,7 @@ pub fn from_array[E : Hash + Eq](arr : Array[E]) -> T[E] {
 
 ///|
 /// 从固定数组创建多重集合
-pub fn of[E : Hash + Eq](arr : FixedArray[E]) -> T[E] {
+pub fn[E : Hash + Eq] of(arr : FixedArray[E]) -> T[E] {
   let ms = new()
   arr.each(fn(e) { ms.add(e) })
   ms
@@ -37,7 +36,7 @@ pub fn of[E : Hash + Eq](arr : FixedArray[E]) -> T[E] {
 /// 参数:
 /// * `self` : 多重集合
 /// * `element` : 要添加的元素
-pub fn add[E : Hash + Eq](self : T[E], element : E) -> Unit {
+pub fn[E : Hash + Eq] add(self : T[E], element : E) -> Unit {
   self.add_n(element, 1)
 }
 
@@ -48,7 +47,7 @@ pub fn add[E : Hash + Eq](self : T[E], element : E) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要添加的元素
 /// * `count` : 要添加的元素数量，必须是正数
-pub fn add_n[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] add_n(self : T[E], element : E, count : Int) -> Unit {
   if count <= 0 {
     return
   }
@@ -69,7 +68,7 @@ pub fn add_n[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
 /// 参数:
 /// * `self` : 多重集合
 /// * `element` : 要移除的元素
-pub fn remove[E : Hash + Eq](self : T[E], element : E) -> Unit {
+pub fn[E : Hash + Eq] remove(self : T[E], element : E) -> Unit {
   self.remove_n(element, 1)
 }
 
@@ -82,7 +81,7 @@ pub fn remove[E : Hash + Eq](self : T[E], element : E) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要移除的元素
 /// * `count` : 要移除的元素数量，必须是正数
-pub fn remove_n[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] remove_n(self : T[E], element : E, count : Int) -> Unit {
   if count <= 0 {
     return
   }
@@ -98,7 +97,7 @@ pub fn remove_n[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
         self.counts.set(element, new_count)
         self.total_count -= count
       }
-    None => ignore(None) // 元素不存在，不做任何事
+    None => () // 元素不存在，不做任何事
   }
 }
 
@@ -109,13 +108,13 @@ pub fn remove_n[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
 /// 参数:
 /// * `self` : 多重集合
 /// * `element` : 要移除的元素
-pub fn remove_all[E : Hash + Eq](self : T[E], element : E) -> Unit {
+pub fn[E : Hash + Eq] remove_all(self : T[E], element : E) -> Unit {
   match self.counts.get(element) {
     Some(count) => {
       self.counts.remove(element)
       self.total_count = self.total_count - count
     }
-    None => ignore(None) // 元素不存在，不做任何事
+    None => () // 元素不存在，不做任何事
   }
 }
 
@@ -128,7 +127,7 @@ pub fn remove_all[E : Hash + Eq](self : T[E], element : E) -> Unit {
 /// * `element` : 要查询的元素
 ///
 /// 返回元素在多重集合中的计数
-pub fn count[E : Hash + Eq](self : T[E], element : E) -> Int {
+pub fn[E : Hash + Eq] count(self : T[E], element : E) -> Int {
   match self.counts.get(element) {
     Some(count) => count
     None => 0
@@ -143,7 +142,7 @@ pub fn count[E : Hash + Eq](self : T[E], element : E) -> Int {
 /// * `element` : 要检查的元素
 ///
 /// 如果多重集合中包含至少一个指定元素实例，返回true
-pub fn contains[E : Hash + Eq](self : T[E], element : E) -> Bool {
+pub fn[E : Hash + Eq] contains(self : T[E], element : E) -> Bool {
   self.counts.contains(element)
 }
 
@@ -154,7 +153,7 @@ pub fn contains[E : Hash + Eq](self : T[E], element : E) -> Bool {
 /// * `self` : 多重集合
 ///
 /// 返回多重集合中不同元素的数量
-pub fn distinct_size[E](self : T[E]) -> Int {
+pub fn[E] distinct_size(self : T[E]) -> Int {
   self.counts.size()
 }
 
@@ -165,7 +164,7 @@ pub fn distinct_size[E](self : T[E]) -> Int {
 /// * `self` : 多重集合
 ///
 /// 返回多重集合中元素的总数
-pub fn size[E](self : T[E]) -> Int {
+pub fn[E] size(self : T[E]) -> Int {
   self.total_count
 }
 
@@ -176,7 +175,7 @@ pub fn size[E](self : T[E]) -> Int {
 /// * `self` : 多重集合
 ///
 /// 如果多重集合为空，返回true
-pub fn is_empty[E](self : T[E]) -> Bool {
+pub fn[E] is_empty(self : T[E]) -> Bool {
   self.total_count == 0
 }
 
@@ -185,7 +184,7 @@ pub fn is_empty[E](self : T[E]) -> Bool {
 ///
 /// 参数:
 /// * `self` : 多重集合
-pub fn clear[E](self : T[E]) -> Unit {
+pub fn[E] clear(self : T[E]) -> Unit {
   self.counts.clear()
   self.total_count = 0
 }
@@ -197,7 +196,7 @@ pub fn clear[E](self : T[E]) -> Unit {
 /// * `self` : 多重集合
 ///
 /// 返回包含多重集合中所有元素及其计数的数组
-pub fn to_array[E](self : T[E]) -> Array[Entry[E]] {
+pub fn[E] to_array(self : T[E]) -> Array[Entry[E]] {
   let result = []
   self.counts.each(fn(elem, count) {
     result.push(Entry::{ element: elem, count })
@@ -212,7 +211,7 @@ pub fn to_array[E](self : T[E]) -> Array[Entry[E]] {
 /// * `self` : 多重集合
 ///
 /// 返回包含多重集合中所有不同元素的数组
-pub fn elements[E](self : T[E]) -> Array[E] {
+pub fn[E] elements(self : T[E]) -> Array[E] {
   let pairs = self.counts.to_array()
   let result = []
   pairs.each(fn(pair) {
@@ -229,7 +228,7 @@ pub fn elements[E](self : T[E]) -> Array[E] {
 /// * `self` : 多重集合
 ///
 /// 返回包含多重集合中所有元素计数的数组
-pub fn counts[E](self : T[E]) -> Array[Int] {
+pub fn[E] counts(self : T[E]) -> Array[Int] {
   let pairs = self.counts.to_array()
   let result = []
   pairs.each(fn(pair) {
@@ -245,7 +244,7 @@ pub fn counts[E](self : T[E]) -> Array[Int] {
 /// 参数:
 /// * `self` : 多重集合
 /// * `f` : 要执行的操作，接收元素和其计数
-pub fn each[E](self : T[E], f : (E, Int) -> Unit) -> Unit {
+pub fn[E] each(self : T[E], f : (E, Int) -> Unit) -> Unit {
   self.counts.each(f)
 }
 
@@ -258,7 +257,7 @@ pub fn each[E](self : T[E], f : (E, Int) -> Unit) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要设置计数的元素
 /// * `count` : 新的计数值，必须是非负数
-pub fn set_count[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] set_count(self : T[E], element : E, count : Int) -> Unit {
   if count < 0 {
     abort("Count cannot be negative")
   }
@@ -290,7 +289,7 @@ pub fn set_count[E : Hash + Eq](self : T[E], element : E, count : Int) -> Unit {
 /// * `other` : 另一个多重集合
 ///
 /// 如果self是other的子集，返回true
-pub fn is_subset[E : Hash + Eq](self : T[E], other : T[E]) -> Bool {
+pub fn[E : Hash + Eq] is_subset(self : T[E], other : T[E]) -> Bool {
   if self.total_count > other.total_count {
     return false
   }
@@ -312,7 +311,7 @@ pub fn is_subset[E : Hash + Eq](self : T[E], other : T[E]) -> Bool {
 /// * `other` : 另一个多重集合
 ///
 /// 如果self是other的超集，返回true
-pub fn is_superset[E : Hash + Eq](self : T[E], other : T[E]) -> Bool {
+pub fn[E : Hash + Eq] is_superset(self : T[E], other : T[E]) -> Bool {
   other.is_subset(self)
 }
 
@@ -324,7 +323,7 @@ pub fn is_superset[E : Hash + Eq](self : T[E], other : T[E]) -> Bool {
 /// * `other` : 第二个多重集合
 ///
 /// 返回一个新的多重集合，表示两个集合的并集
-pub fn union[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
+pub fn[E : Hash + Eq] union(self : T[E], other : T[E]) -> T[E] {
   let result = new()
 
   // 添加self中的所有元素
@@ -349,7 +348,7 @@ pub fn union[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
 /// * `other` : 第二个多重集合
 ///
 /// 返回一个新的多重集合，表示两个集合的交集
-pub fn intersection[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
+pub fn[E : Hash + Eq] intersection(self : T[E], other : T[E]) -> T[E] {
   let result = new()
 
   // 添加在两个集合中都存在的元素，取最小计数
@@ -375,7 +374,7 @@ pub fn intersection[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
 /// * `other` : 第二个多重集合
 ///
 /// 返回一个新的多重集合，表示两个集合的差集
-pub fn difference[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
+pub fn[E : Hash + Eq] difference(self : T[E], other : T[E]) -> T[E] {
   let result = new()
 
   // 添加self中的元素，减去other中的计数
@@ -397,7 +396,7 @@ pub fn difference[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
 /// * `other` : 第二个多重集合
 ///
 /// 返回一个新的多重集合，表示两个集合的对称差集
-pub fn symmetric_difference[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
+pub fn[E : Hash + Eq] symmetric_difference(self : T[E], other : T[E]) -> T[E] {
   let result = new()
 
   // 添加self中比other多的元素
@@ -429,10 +428,10 @@ pub fn symmetric_difference[E : Hash + Eq](self : T[E], other : T[E]) -> T[E] {
 /// * `op` : 要执行的集合操作
 ///
 /// 返回一个新的多重集合，表示操作结果
-pub fn apply_operation[E : Hash + Eq](
+pub fn[E : Hash + Eq] apply_operation(
   self : T[E],
   other : T[E],
-  op : SetOperation
+  op : SetOperation,
 ) -> T[E] {
   match op {
     SetOperation::Union => self.union(other)
@@ -448,7 +447,7 @@ pub fn apply_operation[E : Hash + Eq](
 /// 参数:
 /// * `self` : 多重集合
 /// * `other` : 要添加的多重集合
-pub fn add_all[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
+pub fn[E : Hash + Eq] add_all(self : T[E], other : T[E]) -> Unit {
   other.each(fn(elem, count) { self.add_n(elem, count) })
 }
 
@@ -458,7 +457,7 @@ pub fn add_all[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
 /// 参数:
 /// * `self` : 多重集合
 /// * `other` : 要减去的多重集合
-pub fn subtract[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
+pub fn[E : Hash + Eq] subtract(self : T[E], other : T[E]) -> Unit {
   other.each(fn(elem, count) { self.remove_n(elem, count) })
 }
 
@@ -468,7 +467,7 @@ pub fn subtract[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
 /// 参数:
 /// * `self` : 多重集合
 /// * `other` : 另一个多重集合
-pub fn retain[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
+pub fn[E : Hash + Eq] retain(self : T[E], other : T[E]) -> Unit {
   let elements_to_process = self.elements()
   elements_to_process.each(fn(elem) {
     let self_count = self.count(elem)
@@ -491,7 +490,7 @@ pub fn retain[E : Hash + Eq](self : T[E], other : T[E]) -> Unit {
 /// * `self` : 多重集合
 ///
 /// 返回一个迭代器，产生(元素, 计数)对
-pub fn iter[E](self : T[E]) -> Iter2[E, Int] {
+pub fn[E] iter(self : T[E]) -> Iter2[E, Int] {
   self.counts.iter2()
 }
 
@@ -502,7 +501,7 @@ pub fn iter[E](self : T[E]) -> Iter2[E, Int] {
 /// * `iter` : 产生元素的迭代器
 ///
 /// 返回一个包含迭代器中所有元素的多重集合
-pub fn from_iter[E : Hash + Eq](iter : Iter[E]) -> T[E] {
+pub fn[E : Hash + Eq] from_iter(iter : Iter[E]) -> T[E] {
   let ms = new()
   iter.each(fn(e) { ms.add(e) })
   ms
@@ -517,7 +516,7 @@ pub fn from_iter[E : Hash + Eq](iter : Iter[E]) -> T[E] {
 /// * `self` : 多重集合
 ///
 /// 返回一个包含最高频元素及其计数的可选值
-pub fn most_common[E](self : T[E]) -> Entry[E]? {
+pub fn[E] most_common(self : T[E]) -> Entry[E]? {
   if self.is_empty() {
     return None
   }
@@ -543,7 +542,7 @@ pub fn most_common[E](self : T[E]) -> Entry[E]? {
 /// * `n` : 要返回的元素数量
 ///
 /// 返回一个包含最高频n个元素及其计数的数组，按频率降序排列
-pub fn most_common_n[E](self : T[E], n : Int) -> Array[Entry[E]] {
+pub fn[E] most_common_n(self : T[E], n : Int) -> Array[Entry[E]] {
   if n <= 0 || self.is_empty() {
     return []
   }
