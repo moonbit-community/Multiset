@@ -154,7 +154,7 @@ pub fn[E : Hash + Eq] contains(self : T[E], element : E) -> Bool {
 ///
 /// 返回多重集合中不同元素的数量
 pub fn[E] distinct_size(self : T[E]) -> Int {
-  self.counts.size()
+  self.counts.length()
 }
 
 ///|
