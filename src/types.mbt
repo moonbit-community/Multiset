@@ -23,7 +23,7 @@ pub(all) enum SetOperation {
 ///|
 pub(all) struct T[E] {
   /// 存储元素及其计数的哈希表
-  mut counts : @hashmap.T[E, Int]
+  mut counts : @hashmap.HashMap[E, Int]
   /// 所有元素计数的总和
   mut total_count : Int
 } derive(Show)
