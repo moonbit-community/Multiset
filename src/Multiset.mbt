@@ -5,7 +5,7 @@
 /// * `capacity` : 初始容量，默认为8
 ///
 /// 返回一个新的空多重集合
-pub fn[E] new(capacity~ : Int = 8) -> T[E] {
+pub fn[E] new(capacity? : Int = 8) -> T[E] {
   { counts: @hashmap.new(capacity~), total_count: 0 }
 }
 
@@ -81,7 +81,11 @@ pub fn[E : Hash + Eq] T::remove(self : T[E], element : E) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要移除的元素
 /// * `count` : 要移除的元素数量，必须是正数
-pub fn[E : Hash + Eq] T::remove_n(self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] T::remove_n(
+  self : T[E],
+  element : E,
+  count : Int,
+) -> Unit {
   if count <= 0 {
     return
   }
@@ -257,7 +261,11 @@ pub fn[E] T::each(self : T[E], f : (E, Int) -> Unit) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要设置计数的元素
 /// * `count` : 新的计数值，必须是非负数
-pub fn[E : Hash + Eq] T::set_count(self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] T::set_count(
+  self : T[E],
+  element : E,
+  count : Int,
+) -> Unit {
   if count < 0 {
     abort("Count cannot be negative")
   }
@@ -396,7 +404,10 @@ pub fn[E : Hash + Eq] T::difference(self : T[E], other : T[E]) -> T[E] {
 /// * `other` : 第二个多重集合
 ///
 /// 返回一个新的多重集合，表示两个集合的对称差集
-pub fn[E : Hash + Eq] T::symmetric_difference(self : T[E], other : T[E]) -> T[E] {
+pub fn[E : Hash + Eq] T::symmetric_difference(
+  self : T[E],
+  other : T[E],
+) -> T[E] {
   let result = new()
 
   // 添加self中比other多的元素
