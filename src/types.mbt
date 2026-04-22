@@ -5,7 +5,16 @@ pub(all) struct Entry[E] {
   element : E
   /// 该元素在集合中出现的次数
   count : Int
-} derive(Show)
+}
+
+///|
+pub impl[E : Show] Show for Entry[E] with output(self, logger) {
+  logger.write_string("Entry::{ element: ")
+  logger.write_object(self.element)
+  logger.write_string(", count: ")
+  logger.write_object(self.count)
+  logger.write_string(" }")
+}
 
 ///|
 /// 多重集合操作枚举
@@ -26,4 +35,13 @@ pub(all) struct T[E] {
   mut counts : @hashmap.HashMap[E, Int]
   /// 所有元素计数的总和
   mut total_count : Int
-} derive(Show)
+}
+
+///|
+pub impl[E : Show] Show for T[E] with output(self, logger) {
+  logger.write_string("T::{ counts: ")
+  logger.write_object(self.counts)
+  logger.write_string(", total_count: ")
+  logger.write_object(self.total_count)
+  logger.write_string(" }")
+}
