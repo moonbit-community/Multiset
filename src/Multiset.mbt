@@ -572,7 +572,7 @@ pub fn[E] T::most_common_n(self : T[E], n : Int) -> Array[Entry[E]] {
 
 ///|
 /// 实现多重集合的Eq trait
-pub impl[E : Eq + Hash] Eq for T[E] with op_equal(self, other) {
+pub impl[E : Eq + Hash] Eq for T[E] with equal(self, other) {
   if self.total_count != other.total_count {
     return false
   }
