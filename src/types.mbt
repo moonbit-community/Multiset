@@ -38,9 +38,9 @@ pub(all) struct T[E] {
 }
 
 ///|
-pub impl[E : Show] Show for T[E] with output(self, logger) {
+pub impl[E : Debug] Show for T[E] with output(self, logger) {
   logger.write_string("T::{ counts: ")
-  logger.write_object(self.counts)
+  logger.write_string(@debug.to_string(self.counts))
   logger.write_string(", total_count: ")
   logger.write_object(self.total_count)
   logger.write_string(" }")
