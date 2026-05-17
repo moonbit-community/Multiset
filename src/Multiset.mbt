@@ -5,8 +5,8 @@
 /// * `capacity` : 初始容量，默认为8
 ///
 /// 返回一个新的空多重集合
-pub fn[E] new(capacity? : Int = 8) -> T[E] {
-  { counts: @hashmap.new(capacity~), total_count: 0 }
+pub fn[E : Hash + Eq] new(capacity? : Int = 8) -> T[E] {
+  { counts: @hashmap.HashMap([], capacity~), total_count: 0 }
 }
 
 ///|
