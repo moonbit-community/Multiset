@@ -8,7 +8,7 @@ pub(all) struct Entry[E] {
 }
 
 ///|
-pub impl[E : Show] Show for Entry[E] with output(self, logger) {
+pub impl[E : Show] Show for Entry[E] with fn output(self, logger) {
   logger.write_string("Entry::{ element: ")
   logger.write_object(self.element)
   logger.write_string(", count: ")
@@ -38,7 +38,7 @@ pub(all) struct T[E] {
 }
 
 ///|
-pub impl[E : Debug] Show for T[E] with output(self, logger) {
+pub impl[E : Debug] Show for T[E] with fn output(self, logger) {
   logger.write_string("T::{ counts: ")
   logger.write_string(@debug.to_string(self.counts))
   logger.write_string(", total_count: ")
