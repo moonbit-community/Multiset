@@ -2,6 +2,7 @@
 package "0Ayachi0/Multiset"
 
 import {
+  "moonbitlang/core/debug",
   "moonbitlang/core/hashmap",
 }
 
@@ -10,7 +11,7 @@ pub fn[E : Hash + Eq] from_array(Array[E]) -> T[E]
 
 pub fn[E : Hash + Eq] from_iter(Iter[E]) -> T[E]
 
-pub fn[E] new(capacity? : Int) -> T[E]
+pub fn[E : Hash + Eq] new(capacity? : Int) -> T[E]
 
 pub fn[E : Hash + Eq] of(FixedArray[E]) -> T[E]
 
@@ -21,6 +22,8 @@ pub(all) struct Entry[E] {
   element : E
   count : Int
 }
+pub fn[E : Show] Entry::output(Self[E], &Logger) -> Unit
+pub fn[E : Show] Entry::to_string(Self[E]) -> String
 pub impl[E : Show] Show for Entry[E]
 
 pub(all) enum SetOperation {
@@ -46,6 +49,7 @@ pub fn[E : Hash + Eq] T::difference(Self[E], Self[E]) -> Self[E]
 pub fn[E] T::distinct_size(Self[E]) -> Int
 pub fn[E] T::each(Self[E], (E, Int) -> Unit) -> Unit
 pub fn[E] T::elements(Self[E]) -> Array[E]
+pub fn[E : Eq + Hash] T::equal(Self[E], Self[E]) -> Bool
 pub fn[E : Hash + Eq] T::intersection(Self[E], Self[E]) -> Self[E]
 pub fn[E] T::is_empty(Self[E]) -> Bool
 pub fn[E : Hash + Eq] T::is_subset(Self[E], Self[E]) -> Bool
@@ -53,6 +57,8 @@ pub fn[E : Hash + Eq] T::is_superset(Self[E], Self[E]) -> Bool
 pub fn[E] T::iter(Self[E]) -> Iter2[E, Int]
 pub fn[E] T::most_common(Self[E]) -> Entry[E]?
 pub fn[E] T::most_common_n(Self[E], Int) -> Array[Entry[E]]
+pub fn[E : Eq + Hash] T::not_equal(Self[E], Self[E]) -> Bool
+pub fn[E : @debug.Debug] T::output(Self[E], &Logger) -> Unit
 pub fn[E : Hash + Eq] T::remove(Self[E], E) -> Unit
 pub fn[E : Hash + Eq] T::remove_all(Self[E], E) -> Unit
 pub fn[E : Hash + Eq] T::remove_n(Self[E], E, Int) -> Unit
@@ -62,11 +68,11 @@ pub fn[E] T::size(Self[E]) -> Int
 pub fn[E : Hash + Eq] T::subtract(Self[E], Self[E]) -> Unit
 pub fn[E : Hash + Eq] T::symmetric_difference(Self[E], Self[E]) -> Self[E]
 pub fn[E] T::to_array(Self[E]) -> Array[Entry[E]]
+pub fn[E : @debug.Debug] T::to_string(Self[E]) -> String
 pub fn[E : Hash + Eq] T::union(Self[E], Self[E]) -> Self[E]
 pub impl[E : Eq + Hash] Eq for T[E]
-pub impl[E : Show] Show for T[E]
+pub impl[E : @debug.Debug] Show for T[E]
 
 // Type aliases
 
 // Traits
-
