@@ -1,0 +1,19 @@
+name = "0Ayachi0/Multiset"
+
+version = "0.1.0"
+
+readme = "README.md"
+
+repository = "https://github.com/moonbit-community/Multiset"
+
+license = "Apache-2.0"
+
+keywords = [ "multiset", "data-structure" ]
+
+description = "A  Multiset (bag) library for MoonBit that supports element frequency counting, set operations, and batch processing"
+
+source = "src"
+
+options(
+  dependencies: { "moonbitlang/core": "latest" },
+)
