@@ -4,11 +4,11 @@ pub(all) struct Entry[E] {
   /// 元素值
   element : E
   /// 该元素在集合中出现的次数
-  count : Int
+  count : Int32
 }
 
 ///|
-pub impl[E : Show] Show for Entry[E] with output(self, logger) {
+pub impl[E : Show] Show for Entry[E] with fn output(self, logger) {
   logger.write_string("Entry::{ element: ")
   logger.write_object(self.element)
   logger.write_string(", count: ")
@@ -32,13 +32,13 @@ pub(all) enum SetOperation {
 ///|
 pub(all) struct T[E] {
   /// 存储元素及其计数的哈希表
-  mut counts : @hashmap.HashMap[E, Int]
+  mut counts : @hashmap.HashMap[E, Int32]
   /// 所有元素计数的总和
-  mut total_count : Int
+  mut total_count : Int32
 }
 
 ///|
-pub impl[E : Debug] Show for T[E] with output(self, logger) {
+pub impl[E : Debug] Show for T[E] with fn output(self, logger) {
   logger.write_string("T::{ counts: ")
   logger.write_string(@debug.to_string(self.counts))
   logger.write_string(", total_count: ")
