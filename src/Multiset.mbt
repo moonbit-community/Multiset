@@ -5,8 +5,8 @@
 /// * `capacity` : 初始容量，默认为8
 ///
 /// 返回一个新的空多重集合
-pub fn[E : Hash + Eq] new(capacity? : Int = 8) -> T[E] {
-  { counts: @hashmap.HashMap([], capacity~), total_count: 0 }
+pub fn[E : Hash + Eq] new(capacity~ : Int32 = 8) -> T[E] {
+  { counts: @hashmap.HashMap([], capacity~), total_count: 0, }
 }
 
 ///|
@@ -47,7 +47,7 @@ pub fn[E : Hash + Eq] T::add(self : T[E], element : E) -> Unit {
 /// * `self` : 多重集合
 /// * `element` : 要添加的元素
 /// * `count` : 要添加的元素数量，必须是正数
-pub fn[E : Hash + Eq] T::add_n(self : T[E], element : E, count : Int) -> Unit {
+pub fn[E : Hash + Eq] T::add_n(self : T[E], element : E, count : Int32) -> Unit {
   if count <= 0 {
     return
   }
@@ -84,7 +84,7 @@ pub fn[E : Hash + Eq] T::remove(self : T[E], element : E) -> Unit {
 pub fn[E : Hash + Eq] T::remove_n(
   self : T[E],
   element : E,
-  count : Int,
+  count : Int32,
 ) -> Unit {
   if count <= 0 {
     return
@@ -131,7 +131,7 @@ pub fn[E : Hash + Eq] T::remove_all(self : T[E], element : E) -> Unit {
 /// * `element` : 要查询的元素
 ///
 /// 返回元素在多重集合中的计数
-pub fn[E : Hash + Eq] T::count(self : T[E], element : E) -> Int {
+pub fn[E : Hash + Eq] T::count(self : T[E], element : E) -> Int32 {
   match self.counts.get(element) {
     Some(count) => count
     None => 0
@@ -157,7 +157,7 @@ pub fn[E : Hash + Eq] T::contains(self : T[E], element : E) -> Bool {
 /// * `self` : 多重集合
 ///
 /// 返回多重集合中不同元素的数量
-pub fn[E] T::distinct_size(self : T[E]) -> Int {
+pub fn[E] T::distinct_size(self : T[E]) -> Int32 {
   self.counts.length()
 }
 
@@ -168,7 +168,7 @@ pub fn[E] T::distinct_size(self : T[E]) -> Int {
 /// * `self` : 多重集合
 ///
 /// 返回多重集合中元素的总数
-pub fn[E] T::size(self : T[E]) -> Int {
+pub fn[E] T::size(self : T[E]) -> Int32 {
   self.total_count
 }
 
@@ -203,7 +203,7 @@ pub fn[E] T::clear(self : T[E]) -> Unit {
 pub fn[E] T::to_array(self : T[E]) -> Array[Entry[E]] {
   let result = []
   self.counts.each(fn(elem, count) {
-    result.push(Entry::{ element: elem, count })
+    result.push(Entry::{ element: elem, count, })
   })
   result
 }
@@ -232,7 +232,7 @@ pub fn[E] T::elements(self : T[E]) -> Array[E] {
 /// * `self` : 多重集合
 ///
 /// 返回包含多重集合中所有元素计数的数组
-pub fn[E] T::counts(self : T[E]) -> Array[Int] {
+pub fn[E] T::counts(self : T[E]) -> Array[Int32] {
   let pairs = self.counts.to_array()
   let result = []
   pairs.each(fn(pair) {
@@ -248,7 +248,7 @@ pub fn[E] T::counts(self : T[E]) -> Array[Int] {
 /// 参数:
 /// * `self` : 多重集合
 /// * `f` : 要执行的操作，接收元素和其计数
-pub fn[E] T::each(self : T[E], f : (E, Int) -> Unit) -> Unit {
+pub fn[E] T::each(self : T[E], f : (E, Int32) -> Unit) -> Unit {
   self.counts.each(f)
 }
 
@@ -264,7 +264,7 @@ pub fn[E] T::each(self : T[E], f : (E, Int) -> Unit) -> Unit {
 pub fn[E : Hash + Eq] T::set_count(
   self : T[E],
   element : E,
-  count : Int,
+  count : Int32,
 ) -> Unit {
   if count < 0 {
     abort("Count cannot be negative")
@@ -501,7 +501,7 @@ pub fn[E : Hash + Eq] T::retain(self : T[E], other : T[E]) -> Unit {
 /// * `self` : 多重集合
 ///
 /// 返回一个迭代器，产生(元素, 计数)对
-pub fn[E] T::iter(self : T[E]) -> Iter2[E, Int] {
+pub fn[E] T::iter(self : T[E]) -> Iter2[E, Int32] {
   self.counts.iter2()
 }
 
@@ -540,7 +540,7 @@ pub fn[E] T::most_common(self : T[E]) -> Entry[E]? {
     }
   })
   match max_element {
-    Some(elem) => Some(Entry::{ element: elem, count: max_count })
+    Some(elem) => Some(Entry::{ element: elem, count: max_count, })
     None => None // 理论上不会到这里，因为之前已经检查了是否为空
   }
 }
@@ -553,7 +553,7 @@ pub fn[E] T::most_common(self : T[E]) -> Entry[E]? {
 /// * `n` : 要返回的元素数量
 ///
 /// 返回一个包含最高频n个元素及其计数的数组，按频率降序排列
-pub fn[E] T::most_common_n(self : T[E], n : Int) -> Array[Entry[E]] {
+pub fn[E] T::most_common_n(self : T[E], n : Int32) -> Array[Entry[E]] {
   if n <= 0 || self.is_empty() {
     return []
   }
@@ -583,7 +583,7 @@ pub fn[E] T::most_common_n(self : T[E], n : Int) -> Array[Entry[E]] {
 
 ///|
 /// 实现多重集合的Eq trait
-pub impl[E : Eq + Hash] Eq for T[E] with equal(self, other) {
+pub impl[E : Eq + Hash] Eq for T[E] with fn equal(self, other) {
   if self.total_count != other.total_count {
     return false
   }

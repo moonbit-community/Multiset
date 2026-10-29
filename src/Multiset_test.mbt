@@ -1,7 +1,7 @@
 ///|
 /// 测试创建空多重集合
 test "new empty multiset" {
-  let ms : @Multiset.T[Int] = @Multiset.new()
+  let ms : @Multiset.T[Int32] = @Multiset.new()
   assert_true(ms.is_empty())
   assert_eq(ms.size(), 0)
   assert_eq(ms.distinct_size(), 0)
@@ -192,24 +192,27 @@ test "apply_operation" {
   let ms2 = @Multiset.from_array(["b", "c"])
 
   // 测试Union操作
-  let result1 = ms1.apply_operation(ms2, SetOperation::Union)
+  let result1 = ms1.apply_operation(ms2, @Multiset.SetOperation::Union)
   assert_eq(result1.count("a"), 2)
   assert_eq(result1.count("b"), 1)
   assert_eq(result1.count("c"), 1)
 
   // 测试Intersection操作
-  let result2 = ms1.apply_operation(ms2, SetOperation::Intersection)
+  let result2 = ms1.apply_operation(ms2, @Multiset.SetOperation::Intersection)
   assert_eq(result2.count("a"), 0)
   assert_eq(result2.count("b"), 1)
   assert_eq(result2.count("c"), 0)
 
   // 测试Difference操作
-  let result3 = ms1.apply_operation(ms2, SetOperation::Difference)
+  let result3 = ms1.apply_operation(ms2, @Multiset.SetOperation::Difference)
   assert_eq(result3.count("a"), 2)
   assert_eq(result3.count("b"), 0)
 
   // 测试SymmetricDifference操作
-  let result4 = ms1.apply_operation(ms2, SetOperation::SymmetricDifference)
+  let result4 = ms1.apply_operation(
+    ms2,
+    @Multiset.SetOperation::SymmetricDifference,
+  )
   assert_eq(result4.count("a"), 2)
   assert_eq(result4.count("b"), 0)
   assert_eq(result4.count("c"), 1)
@@ -807,14 +810,14 @@ test "is_subset with insufficient count in other" {
 ///|
 /// 这是一个临时测试文件
 test "temp test" {
-  let ms : @Multiset.T[Int] = @Multiset.new()
+  let ms : @Multiset.T[Int32] = @Multiset.new()
   assert_true(ms.is_empty())
 }
 
 ///|
 /// 附加测试：测试most_common在空集合上的行为
 test "most_common with empty set" {
-  let empty_ms : @Multiset.T[Int] = @Multiset.new()
+  let empty_ms : @Multiset.T[Int32] = @Multiset.new()
   // 确保集合为空
   assert_true(empty_ms.is_empty())
 
@@ -857,7 +860,7 @@ test "is_subset edge case" {
 /// 专门测试most_common函数中的None分支
 test "most_common None branch coverage" {
   // 创建一个多重集合
-  let ms : @Multiset.T[Int] = @Multiset.new()
+  let ms : @Multiset.T[Int32] = @Multiset.new()
 
   // 确保集合为空
   assert_true(ms.is_empty())
